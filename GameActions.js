@@ -4,3 +4,9 @@ export const setUserList = list => (
         payload: list,
     }
 );
+
+export const startGame = () => (
+    {
+        type: 'START_GAME',
+    }
+);

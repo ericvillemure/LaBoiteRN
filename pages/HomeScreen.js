@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Button, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
+import { homeStyles } from '../styles';
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -16,20 +17,3 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-/* Colors
-https://colorhunt.co/palette/ecf9fffffbebffe7ccf8cba6
-#ECF9FF
-#FFFBEB
-#FFE7CC
-#F8CBA6
-
- */
-
-const homeStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFBEB',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

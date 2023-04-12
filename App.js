@@ -9,11 +9,11 @@ import gameReducer from './GameReducer';
 import { Provider } from 'react-redux';
 import HomeScreen from './pages/HomeScreen';
 import CreateScreen from './pages/CreateScreen';
+import BettingScreen from './pages/BettingScreen';
+import PlayingHandScreen from './pages/PlayingHandScreen';
 
 
 const store = createStore(gameReducer);
-console.log(store.getState())
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -23,6 +23,8 @@ export default function App() {
         <Stack.Navigator initialRouteName="Create">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Create" component={CreateScreen} />
+          <Stack.Screen name="Betting" component={BettingScreen} />
+          <Stack.Screen name="PlayingHand" component={PlayingHandScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
