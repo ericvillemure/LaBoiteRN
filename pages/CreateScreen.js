@@ -21,7 +21,7 @@ function CreateScreen({ users, navigation, setUserList, startGame }) {
         title="Démarrer"
         onPress={() => {
           startGame()
-          navigation.navigate('Betting', { currentHandIndex: 0 })
+          navigation.navigate('Betting')
         }}
       />}
 

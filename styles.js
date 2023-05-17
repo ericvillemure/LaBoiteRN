@@ -33,13 +33,121 @@ export const createStyles = StyleSheet.create({
 
 export const bettingStyles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: 'column',
         backgroundColor: '#FFFBEB',
-        alignItems: 'center',
+        // backgroundColor: 'green',
+        alignItems: 'stretch',
         justifyContent: 'center',
+
     },
-    suitContainer: {
-        fontSize: 200
+    topContainer: {
+        alignItems: 'center',
+    },
+    topContainerSuit: {
+    },
+    topContainerInfo: {
+        alignSelf: "flex-end",
+        // transform:"translate(0px,-24px)",
+        margin: 5,
+        marginTop: -32,
+
+    },
+    topContainerInfoText: {
+        fontSize: 24,
+    },
+    suitText: {
+        fontSize: 200,
+        includeFontPadding: false,
+        textAlignVertical: "center"
+    },
+    betsView: {
+        // width: "100%",
+        backgroundColor: "#F8CBA6",
+        // backgroundColor: "red",
+        // padding: 2,
+        borderRadius: 10,
+        // borderColor: "green",
+        margin: 4
+    },
+    bottomContainer: {
+        flexDirection: 'row',
+    },
+    betView: {
+        flexDirection: 'row',
+        // margin: 5,
+        // marginLeft: 0,
+        alignItems: "center",
+        // backgroundColor: "blue",
+        
+        // margin:5
+        // padding:5
+    },
+    betDealerIconView: {
+        width: 24,
+        margin:2
+    },
+    betDealerIconText: {
+        fontSize: 20,
+    },
+    betPlayerNameView: {
+        flex: 1,
+        padding: 5
+    },
+    betPlayerNameText: {
+        fontSize: 24,
+    },
+    betButtonsView: {
+        // flex: 1,
+        // flexDirection: 'row',
+
+        //flexWrap: 'wrap',
+    },
+    betInputView: {
+        flex: 1,
+        // backgroundColor: "green",
+        // borderColor:"white"
+        margin:5
+    },
+    betInput: {
+
+
+        fontSize: 20,
+        borderWidth: 1,
+        borderRadius: 3,
+        padding: 3
+    },
+    betBetTextView: {
+        flex: 1,
+    },
+    betBetText: {
+        fontSize: 24,
+    },
+    betBetCheckboxView: {
+        flexDirection: "row",
+        alignItems: "center",
+        // backgroundColor:"blue"
+        // margin:5
+    },
+    betBetCheckboxIcon: {
+        fontSize: 22,
+        // backgroundColor:"red"
+    },
+    betButtonView: {
+        padding: 10,
+        fontSize: 32
+        // Width in percentage does not work with ScrollView's horizontal scroll on Android
+        // width: "33%",
+        // flexBasis: '18%',
+        // width: "20em"
+    },
+    betButton: {
+        width: "33%",
+        backgroundColor: "red",
+        borderRadius: 4,
+        fontSize: 30,
+        borderWidth: 1,
+        margin: 20,
+
     }
 });
 

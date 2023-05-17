@@ -21,10 +21,10 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Create">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Create" component={CreateScreen} />
-          <Stack.Screen name="Betting" component={BettingScreen} />
-          <Stack.Screen name="PlayingHand" component={PlayingHandScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Début" }} />
+          <Stack.Screen name="Create" component={CreateScreen} options={{ title: "Joueurs" }}/>
+          <Stack.Screen name="Betting" component={BettingScreen} options={{ title: "Mises" }} />
+          <Stack.Screen name="PlayingHand" component={PlayingHandScreen} options={{ title: "" }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

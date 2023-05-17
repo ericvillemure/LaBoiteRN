@@ -1,0 +1,7 @@
+add confirmation to back button 
+add option to tell who had winned after each turn
+bug quand on fait enter apres la premiere ,anche ca fait disparaitre le clavier
+valider que toutes les mises ont ete entrées avant de permettre de confirmer
+s'assurer que nous ne pouvons pas jouer plus de 20 manches 
+ajouter une option pour montrer le score actuel
+se debarasser du caret turquoise

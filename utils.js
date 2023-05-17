@@ -1,3 +1,10 @@
+export const handStates = {
+    NotStarted: 'NotStarted',
+    Betting: 'Betting',
+    Playing: 'Playing',
+    Done: 'Done'
+};
+
 export const suits = [
     {
         color: 'red',
@@ -16,10 +23,13 @@ export const suits = [
         symbol: '♠'
     },
     {
-        color: 'white',
-        symbol: '🛇'
+        color: 'blue',
+        symbol: '*'
     }
 ]
+
+export const dealer = "🎲";
+export const box = "📦";
 
 export function getDistanceFromMiddle(arr_length, index) {
     // Get the middle indices of the array
