@@ -1,15 +1,15 @@
+import uuid from 'react-native-uuid';
 import { combineReducers } from 'redux';
 
 import { getMaxNumberOfCardsPerHand, handStates } from './utils';
 
 const INITIAL_STATE = {
-    users: ["Eric", "Karine", "Johanne", "Pierre"],
+    users: ["Eric", "Karine", "Johanne", "Pierre"].map(user => ({ name: user, id: uuid.v4() })),
     currentHandIndex: -1,
     gameEnded: false
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {
-    // console.log(JSON.stringify(state), action);
     switch (action.type) {
         case 'SET_USER_LIST':
             return {
@@ -18,10 +18,11 @@ const gameReducer = (state = INITIAL_STATE, action) => {
             }
         case 'START_GAME':
             const maxNumberOfCardsPerHand = getMaxNumberOfCardsPerHand(state.users.length);
-            const numberOfHands = Array(2 * maxNumberOfCardsPerHand);
+            const numberOfHands = 2 * maxNumberOfCardsPerHand;
             return {
                 ...state,
-                hands: Array.from(numberOfHands, (value, index) => ({
+                hands: Array.from(Array(numberOfHands), (_value, index) => ({
+                    id: uuid.v4(),
                     state: index === 0 ? handStates.Betting : handStates.NotStarted,
                     usersValues: Array.from(Array(state.users.length), () =>
                     ({
@@ -30,6 +31,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
                     }))
                 })),
                 currentHandIndex: 0,
+                gameEnded: false
             }
         case 'SET_BET':
             {
@@ -87,9 +89,9 @@ const gameReducer = (state = INITIAL_STATE, action) => {
                     throw new Error('State should be Playing');
                 }
                 const maxNumberOfCardsPerHand = getMaxNumberOfCardsPerHand(state.users.length);
-                const numberOfHands = Array(2 * maxNumberOfCardsPerHand);
+                const numberOfHands = 2 * maxNumberOfCardsPerHand;
                 const gameEnded = state.currentHandIndex === numberOfHands - 1;
-                const currentHandIndex = gameEnded ? -1 : state.currentHandIndex + 1;
+                const currentHandIndex = Math.min(numberOfHands - 1, state.currentHandIndex + 1);
                 return {
                     ...state,
                     hands: state.hands.map((hand, index) => {
@@ -108,10 +110,10 @@ const gameReducer = (state = INITIAL_STATE, action) => {
                     }),
                     currentHandIndex,
                     gameEnded
+                }
             }
-    }
         default:
-return state
+            return state
     }
 };
 

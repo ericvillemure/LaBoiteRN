@@ -9,9 +9,8 @@ import gameReducer from './GameReducer';
 import { Provider } from 'react-redux';
 import HomeScreen from './pages/HomeScreen';
 import CreateScreen from './pages/CreateScreen';
-import BettingScreen from './pages/BettingScreen';
-import PlayingHandScreen from './pages/PlayingHandScreen';
-
+import PlayingScreen from './pages/PlayingScreen';
+import ScoreScreen from './pages/ScoreScreen';
 
 const store = createStore(gameReducer);
 const Stack = createNativeStackNavigator();
@@ -22,9 +21,17 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Create">
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Début" }} />
-          <Stack.Screen name="Create" component={CreateScreen} options={{ title: "Joueurs" }}/>
-          <Stack.Screen name="Betting" component={BettingScreen} options={{ title: "Mises" }} />
-          <Stack.Screen name="PlayingHand" component={PlayingHandScreen} options={{ title: "" }}/>
+          <Stack.Screen name="Create" component={CreateScreen} options={{ title: "Joueurs" }} />
+          <Stack.Screen name="Playing" component={PlayingScreen} options={({ navigation }) => ({
+            title: "Levées",
+            headerRight: () =>
+              <Button
+                color="#FFFFFF"
+                title="📈"
+                onPress={() => navigation.navigate('Score')}
+              />
+          })} />
+          <Stack.Screen name="Score" component={ScoreScreen} options={{ title: "Pointage" }} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

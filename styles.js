@@ -5,8 +5,7 @@ https://colorhunt.co/palette/ecf9fffffbebffe7ccf8cba6
 #FFFBEB
 #FFE7CC
 #F8CBA6
-
- */
+*/
 
 export const homeStyles = StyleSheet.create({
     container: {
@@ -78,13 +77,13 @@ export const bettingStyles = StyleSheet.create({
         // marginLeft: 0,
         alignItems: "center",
         // backgroundColor: "blue",
-        
+
         // margin:5
         // padding:5
     },
     betDealerIconView: {
         width: 24,
-        margin:2
+        margin: 2
     },
     betDealerIconText: {
         fontSize: 20,
@@ -106,7 +105,7 @@ export const bettingStyles = StyleSheet.create({
         flex: 1,
         // backgroundColor: "green",
         // borderColor:"white"
-        margin:5
+        margin: 5
     },
     betInput: {
 
@@ -151,11 +150,17 @@ export const bettingStyles = StyleSheet.create({
     }
 });
 
-export const playingHandStyles = StyleSheet.create({
+export const summaryStyles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: "row",
         backgroundColor: '#FFFBEB',
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
     },
+    userRow: {
+        flex: 1
+    },
+    userNameText: {
+        fontSize:24
+    }
 });

@@ -45,7 +45,8 @@ export function getDistanceFromMiddle(arr_length, index) {
 }
 
 export function getMaxNumberOfCardsPerHand(user_count) {
-    const cardsCount = 52 + 4;
-    const maxNumberOfCardsPerHand = Math.min(Math.floor(cardsCount / user_count), 10)
-    return maxNumberOfCardsPerHand;
+    return 1;
+    // const cardsCount = 52 + 4;
+    // const maxNumberOfCardsPerHand = Math.min(Math.floor(cardsCount / user_count), 10)
+    // return maxNumberOfCardsPerHand;
 }

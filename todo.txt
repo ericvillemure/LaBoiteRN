@@ -1,7 +1,11 @@
-add confirmation to back button 
-add option to tell who had winned after each turn
-bug quand on fait enter apres la premiere ,anche ca fait disparaitre le clavier
-valider que toutes les mises ont ete entrées avant de permettre de confirmer
+ok - add confirmation to back button 
+ok - add option to tell who had won after each turn
+bug quand on fait enter apres la premiere manche ca fait disparaitre le clavier
+ok - valider que toutes les mises ont ete entrées avant de permettre de confirmer
 s'assurer que nous ne pouvons pas jouer plus de 20 manches 
-ajouter une option pour montrer le score actuel
+ok - ajouter une option pour montrer le score actuel
 se debarasser du caret turquoise
+ajouter validation nombre maximum = nombre de cartes maximum
+ajouter validation tout le monde l'a mais le nombre de levees misees total est different du nombre de levees
+voir si on peut mettre d'autre validation comme la precedente (1 seule personne l'a pas et le total balance)
+permettre de bouger l'ordre des noms des joueurs

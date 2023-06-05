@@ -11,12 +11,11 @@ import { confirmBets, endHand, setBet, setBusted } from '../GameActions';
 import { suits, getDistanceFromMiddle, getMaxNumberOfCardsPerHand, dealer, box, handStates } from '../utils';
 import { bettingStyles } from '../styles';
 
-function BettingScreen({ users, hand, currentHandIndex, confirmBets, endHand, setBet, setBusted }) {
+function PlayingScreen({ navigation, users, hand, currentHandIndex, confirmBets, endHand, setBet, setBusted, gameEnded }) {
 
-  const inputElements = useRef(new Array())
+  const inputElements = Array.from(new Array(users.length), () => useRef());
 
   function confirmBetsWithValidation() {
-    console.log(JSON.stringify(hand.usersValues))
     if (hand.usersValues.some(userValue => isNaN(userValue.bet))) {
       Alert.alert("Erreur", "Tous les joueurs doivent miser (entrer 0 si aucune levée)");
     } else {
@@ -33,26 +32,50 @@ function BettingScreen({ users, hand, currentHandIndex, confirmBets, endHand, se
         [
           {
             text: 'Annuler',
-            // onPress: () => inputElements.current[firstIndexOfEmptyBet].focus(),
             style: 'cancel',
           },
           { text: 'OK', onPress: () => confirmBetsWithValidation() },
         ]
       );
     } else {
-      console.log("else", (inputIndex + 1) % users.length, inputElements.current.length)
-      inputElements.current[(inputIndex + 1) % users.length].focus()
+      inputElements[(inputIndex + 1) % users.length].current.focus();
     }
   }
 
-  useEffect(() => {
-    inputElements.current[0].focus()
-  }, users)
+  // useEffect(() => {
+  //   if (gameEnded) {
+  //     navigation.navigate('Score')
+  //   }
+  // }, [gameEnded]);
+
+  useEffect(() =>
+      navigation.addListener('beforeRemove', (e) => {
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+
+        // Prompt the user before leaving the screen
+        Alert.alert(
+          'Annuler la partie?',
+          'Si vous retournez à l\'écran précédent vous allez démarrer une nouvelle partie et annuler celle-ci?',
+          [
+            { text: "Ne pas quitter", style: 'cancel', onPress: () => {} },
+            {
+              text: 'Terminer',
+              style: 'destructive',
+              // If the user confirmed, then we dispatch the action we blocked earlier
+              // This will continue the action that had triggered the removal of the screen
+              onPress: () => navigation.dispatch(e.data.action),
+            },
+          ]
+        );
+      }),
+    [navigation]
+  );
 
   const suitIndex = currentHandIndex % 5;
   const dealerIndex = currentHandIndex % users.length;
 
-  const betOrderUserIndices = users.map((item, index) => (dealerIndex + index + 1) % users.length)
+  const betOrderUserIndices = users.map((_item, index) => (dealerIndex + index + 1) % users.length)
 
   const maxNumberOfCardsPerHand = getMaxNumberOfCardsPerHand(users.length)
   const numberOfCards = getDistanceFromMiddle(2 * maxNumberOfCardsPerHand, currentHandIndex);
@@ -63,40 +86,39 @@ function BettingScreen({ users, hand, currentHandIndex, confirmBets, endHand, se
           <Text style={bettingStyles.suitText} color={suits[suitIndex].color}>{suits[suitIndex].symbol}</Text>
         </View>
         <View style={bettingStyles.topContainerInfo}>
-          <Text style={bettingStyles.topContainerInfoText}>{numberOfCards} cartes</Text>
+          <Text style={bettingStyles.topContainerInfoText}>{numberOfCards > 1 ? `${numberOfCards} cartes` : `${numberOfCards} carte`}</Text>
         </View>
       </View>
       <ScrollView style={bettingStyles.betsView}>
         {betOrderUserIndices.map((userIndex, index) =>
-          <View style={bettingStyles.betView} key={users[userIndex]}>
+          <View style={bettingStyles.betView} key={users[userIndex].id}>
             <View style={bettingStyles.betDealerIconView}>
               <Text style={bettingStyles.betDealerIconText}>{userIndex === dealerIndex && dealer}</Text>
             </View>
             <View style={bettingStyles.betPlayerNameView}>
-              <Text style={bettingStyles.betPlayerNameText}>{users[userIndex]}</Text>
+              <Text style={bettingStyles.betPlayerNameText}>{users[userIndex].name}</Text>
             </View>
-            {hand.state === handStates.Betting &&
+            {hand && hand.state === handStates.Betting &&
               <View style={bettingStyles.betInputView}>
-                <TextInput ref={(element) => inputElements.current.push(element)}
-
-                  style={bettingStyles.betInput}
+                <TextInput ref={inputElements[index]}
                   autoFocus={index === 0}
+                  style={bettingStyles.betInput}
                   keyboardType='numeric'
                   returnKeyType={index === users.length - 1 ? "done" : "next"}
                   onChangeText={text => setBet(userIndex, isNaN(text) ? undefined : parseInt(text))}
                   value={hand.usersValues[userIndex].bet?.toString()}
                   onSubmitEditing={() => submitBet(index)} />
               </View>}
-            {hand.state === handStates.Playing &&
+            {hand && hand.state === handStates.Playing &&
               <View style={bettingStyles.betBetTextView}>
                 <Text
                   style={bettingStyles.betBetText} value={hand.bet}>
                   {hand.usersValues[userIndex].bet}
                 </Text>
               </View>}
-            {hand.state === handStates.Playing &&
+            {hand && hand.state === handStates.Playing &&
               <View style={bettingStyles.betBetCheckboxView}>
-                <Text style={bettingStyles.betBetCheckboxIcon} >{box}</Text>
+                <Text style={bettingStyles.betBetCheckboxIcon}>{box}</Text>
                 <Checkbox
                   value={hand.usersValues[userIndex].busted}
                   onValueChange={(newValue) => setBusted(userIndex, newValue)}
@@ -117,16 +139,22 @@ function BettingScreen({ users, hand, currentHandIndex, confirmBets, endHand, se
         }
       </ScrollView >
       <View style={bettingStyles.bottomContainer}>
-        {hand.state === handStates.Betting &&
+        {hand && hand.state === handStates.Betting &&
           <Button
             title="Confirmer levées"
             onPress={() => confirmBetsWithValidation()}
           />
         }
-        {hand.state === handStates.Playing &&
+        {hand && hand.state === handStates.Playing &&
           <Button
             title="Terminer manche"
             onPress={() => endHand()}
+          />
+        }
+        {gameEnded &&
+          <Button
+            title="Voir pointage"
+            onPress={() => navigation.navigate('Score')}
           />
         }
       </View>
@@ -135,8 +163,8 @@ function BettingScreen({ users, hand, currentHandIndex, confirmBets, endHand, se
 }
 
 const mapStateToProps = (state) => {
-  const { users, hands, currentHandIndex } = state.game;
-  return { users, hand: hands[currentHandIndex], currentHandIndex }
+  const { users, hands, currentHandIndex, gameEnded } = state.game;
+  return { users, hand: currentHandIndex >= 0 && hands[currentHandIndex], currentHandIndex, gameEnded }
 };
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -147,5 +175,5 @@ const mapDispatchToProps = dispatch => (
   }, dispatch)
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BettingScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayingScreen);
 
